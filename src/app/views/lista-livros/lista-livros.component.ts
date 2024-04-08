@@ -1,5 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Item, Livro } from 'src/app/models/interfaces';
+import { LivroVolumeInfo } from 'src/app/models/livroVolumeInfo';
 import { LivroService } from 'src/app/service/livro.service';
 
 @Component({
@@ -9,19 +11,27 @@ import { LivroService } from 'src/app/service/livro.service';
 })
 export class ListaLivrosComponent implements OnDestroy {
 
-  listaLivros: [];
+  listaLivros: Livro[];
   campoBusca: string = ''
   subscription: Subscription
+  livro: Livro
 
   constructor(private service: LivroService) { }
 
   buscarLivros() {
     this.subscription = this.service.buscar(this.campoBusca).
       subscribe({
-        next: result => console.log(),
+        next: (items) => {
+          this.listaLivros = this.livrosResult(items)
+        },
         error: erro => console.error(erro),
-        complete: () => console.log("Complete")
       })
+  }
+
+  livrosResult(items: Item[]): LivroVolumeInfo[] {
+    return items.map(item =>{
+      return new LivroVolumeInfo(item)
+    })
   }
 
   ngOnDestroy() {
