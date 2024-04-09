@@ -2,7 +2,7 @@
 
 Projeto busca de livros onde é feito o consumo da API do Google a Books APIs.
 
-## Abilidades adquiridas 
+## Habilidades adquiridas 
 
 * Padrão de projeto Observer
 * Entender como utilizar Observables
